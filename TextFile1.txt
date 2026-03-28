@@ -1,0 +1,44 @@
+﻿
+03/24/26
+
+Making the raylib game in C#. Raylib_cs.
+Using vector2 rather than int x and y to make it easier to move the player and other objects around.
+
+Also discovered that I can make an object to call another object in the same class. 
+This'll likely be useful for later on. Example: Instantiaing a game object in static void main
+and then calling the player object from the game object to move it around and do other things.
+Essentially, it is inheritance without actually forcing a class to inherit from another class. It is more of a composition approach, which is what I prefer.
+
+Now imagine making a hybrid approach where I have a base class called GameObject and then have the player class inherit from that base class.
+Back and forth between composition and inheritance to design an ECS for the game.
+
+When it comes to shared logic and contracts within the same class, I can use interfaces.
+For example. I can make an interface called IPlayer and then have the player class implement that interface
+or IDamageable and have the player class implement that interface as well. The equivalent to using header files in C++.
+
+Take note:
+Interfaces are contracts that a class must follow. They define a set of methods and properties that a class must implement, but they do not provide any implementation themselves. 
+This allows for a lot of flexibility in how classes can be designed and structured, while still ensuring that they adhere to certain standards and expectations.
+Shared logic and contracts within the same class can be achieved through the use of interfaces, which allow for a clear separation of concerns and promote code reusability.
+
+3/27/26:
+
+Implement collisions for the player to prevent the circle from leaving the screen. Use gravity to make the player fall down and jump. Implement a simple ground for the player to stand on.
+**Fixed the vector2 issue where the player wouldn't move because I forgot to update the position of the player after applying movement.**
+
+@2:01pm: Fixed player movement issue. Adding gravity and collisions to the player later. Need to adjust speed.
+
+3/28/26:
+
+Implemented ICollidable interface for the player and ground objects as well as enemies later on . This allows for a more flexible and modular design, as I can easily add new collidable objects to the game without having to modify existing code.
+
+Also added in a serializer to save and load the game state. Also to be able to load ldtk files. From there, I can load
+level editors into raylib and make it playable. This will allow for a lot of flexibility in designing 
+levels and creating new content for the game without having to hardcode everything in.
+
+**Player is now a struct rather than a class. This is because the player is a simple data structure that doesn't require the overhead of a class.
+
+The ICollidable interface contains a hitbox property, which is a rectangle that defines the area of the object that can collide with other objects.
+As well as a radius property for circular objects. Radius is a float while the hitbox is a vector2.
+
+Methods will be added to check collisions between objects. 
