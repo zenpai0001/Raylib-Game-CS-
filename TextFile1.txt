@@ -42,3 +42,13 @@ The ICollidable interface contains a hitbox property, which is a rectangle that 
 As well as a radius property for circular objects. Radius is a float while the hitbox is a vector2.
 
 Methods will be added to check collisions between objects. 
+
+3/29/26:
+
+Implemented basic gravity for the player. Built up the skeleton for the code and did some refactoring.
+Serializer is now an ISerializable interface that can be implemented by any class that needs to be serialized.
+This allows for a more flexible and modular design, as I can easily add new serializable classes to the game without having to modify existing code.
+
+Collisions need to be worked on. I need to implement a way to check for collisions between the player and the ground, as well as between the player and enemies later on. 
+This will likely involve checking the hitbox of the player against the hitbox of other objects in the game.
+Luckily, I've already setup the ICollidable interface.

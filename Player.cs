@@ -4,14 +4,18 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace Raylib_Game_C;
+namespace Raylib_Game_CS_;
 
 public struct Player
 {
     //Player fields
-    public float speed = 1.5f;
+    public float speed = 1.01f;
 
-    public Vector2 position = new Vector2(10f,10f);
+    public bool gravityEnabled = true;
+
+    public float gravityStrength = 9.81f;
+
+    public Vector2 playerPosition = new Vector2 (Raylib.GetScreenWidth()/2.0f, Raylib.GetScreenHeight()/2.0f);
 
     public Vector2 direction = Vector2.Zero;
 
@@ -22,19 +26,23 @@ public struct Player
     public void Update()
     {
         //Updates the direction vector based on player input. I'll need to workout a few things.
-        if (Raylib.IsKeyDown(KeyboardKey.W)) position.Y -= 1.0f;
-        if (Raylib.IsKeyDown(KeyboardKey.S)) position.Y += 1.0f;
-        if (Raylib.IsKeyDown(KeyboardKey.A)) position.X -= 1.0f;
-        if (Raylib.IsKeyDown(KeyboardKey.D)) position.X += 1.0f;
-        if (Raylib.IsKeyDown(KeyboardKey.Space)) position.X += speed;
+        if (Raylib.IsKeyDown(KeyboardKey.W)) playerPosition.Y -= gravityStrength/2.0f;
+        if (Raylib.IsKeyDown(KeyboardKey.A)) playerPosition.X -= 1.0f;
+        if (Raylib.IsKeyDown(KeyboardKey.D)) playerPosition.X += 1.0f;
 
         //Moves the player based on the direction vector and speed.
-        position += direction * speed * Raylib.GetFrameTime();
+        playerPosition += direction * speed * Raylib.GetFrameTime();
+
+        if(gravityEnabled == true)
+        {
+            playerPosition.Y += gravityStrength * Raylib.GetFrameTime();
+        }
+
 
         //Stops player from moving when keyboard input is released.
         if (Raylib.IsKeyDown(KeyboardKey.Null))
         {
-            position = Vector2.Zero;
+            playerPosition = Vector2.Zero;
         }
        
     }

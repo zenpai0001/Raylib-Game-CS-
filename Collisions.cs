@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace Raylib_Game_C_
+namespace Raylib_Game_CS_
 {
     public class Collisions
     {
@@ -14,12 +14,14 @@ namespace Raylib_Game_C_
         public interface ICollidable
         {
             public Vector2 Hitbox { get; set; }
-            public float radius { get; set; }
 
-            public void CollisionCheck()
+            public Vector2 Position { get; set; }
+            public float Radius { get; set; }
+
+            public void CollisionCheck(ICollidable collidable)
             {
-                //Collision logic goes here.
-                //For now, this is just a placeholder to show where the collision logic will go.
+                //Check collision between two rectangles. This is a placeholder for now, but I'll need to workout the logic for this later on.
+                Raylib.CheckCollisionRecs (new Rectangle(Position.X, Position.Y, Hitbox.X, Hitbox.Y), new Rectangle(Position.X, Position.Y, Hitbox.X, Hitbox.Y));
             }
         }
 
