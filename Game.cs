@@ -1,4 +1,4 @@
-﻿using Raylib_cs;
+using Raylib_cs;
 using System;
 using System.Numerics;
 namespace Raylib_Game_CS_;
@@ -12,8 +12,14 @@ public class Game
     public void Update()
     {
         //This is where the game updates every frame. Game loop calls this function.
+        Raylib.DrawText("Player1", 10, 10, 20, Color.White);
+        Raylib.DrawText("FPS: " +Raylib.GetFPS().ToString(), 10, 40, 20, Color.White);
 
-      
+        Raylib.DrawRectangle((int)player.hitbox2.X,(int)player.hitbox2.Y,100,20,Color.Blue);
+        
+        
+        player.CollisionCheck(player);
+
     }
     public void GameStart()
     {
@@ -24,12 +30,16 @@ public class Game
 
         while (!Raylib.WindowShouldClose())
         {
-            game.Update();
             Raylib.BeginDrawing();
+            Raylib.BeginMode2D(new Camera2D(player.playerPosition, Vector2.One, 0, 2));
+
             player.Update();
+            game.Update();
             Raylib.ClearBackground(Color.Black);
             Raylib.DrawCircleV(player.playerPosition, 20, Color.Green);
-            Raylib.DrawText("Use WAD to move the circle", 10, 10, 20, Color.White);
+            
+
+            Raylib.EndMode2D();
 
             Raylib.EndDrawing();
         }
