@@ -1,4 +1,4 @@
-﻿using Raylib_cs;
+using Raylib_cs;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -6,8 +6,17 @@ using System.Text;
 
 namespace Raylib_Game_CS_;
 
-public struct Player
+public class Player : ICollidable
 {
+    //ICollidable fields
+    public Vector2 Hitbox { get; set; }
+
+    public float Radius { get; set; }
+
+    public Rectangle hitbox1 { get; set; }
+
+  public Rectangle hitbox2 { get; set; }
+
     //Player fields
     public float speed = 1.01f;
 
@@ -15,7 +24,7 @@ public struct Player
 
     public float gravityStrength = 9.81f;
 
-    public Vector2 playerPosition = new Vector2 (Raylib.GetScreenWidth()/2.0f, Raylib.GetScreenHeight()/2.0f);
+    public Vector2 playerPosition = new Vector2 (Raylib.GetScreenWidth()/2.2f, Raylib.GetScreenHeight()/2.2f);
 
     public Vector2 direction = Vector2.Zero;
 
@@ -37,13 +46,21 @@ public struct Player
         {
             playerPosition.Y += gravityStrength * Raylib.GetFrameTime();
         }
-
-
         //Stops player from moving when keyboard input is released.
         if (Raylib.IsKeyDown(KeyboardKey.Null))
         {
             playerPosition = Vector2.Zero;
         }
-       
+
+        ICollidable collidable = this; //This is just to satisfy the compiler, I don't actually need to use this variable.
     }
+    public void CollisionCheck(ICollidable collidable)
+    {
+        Rectangle hitbox1 = new Rectangle(Hitbox.X, Hitbox.Y, Radius * 2, Radius * 2);
+
+        Rectangle hitbox2 = new Rectangle(collidable.Hitbox.X, collidable.Hitbox.Y, collidable.Radius * 2, collidable.Radius * 2);
+
+        Raylib.CheckCollisionRecs(hitbox1, hitbox2);
+    }
+
 }
