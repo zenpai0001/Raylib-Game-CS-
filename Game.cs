@@ -1,8 +1,5 @@
 using Raylib_cs;
-using System;
 using System.Numerics;
-using ldtk;
-using Raylib_Game_C_;
 
 namespace Raylib_Game_CS_;
 
@@ -30,37 +27,14 @@ public class Game
         Raylib.InitWindow(800, 480, "Hello World");
 
         Raylib.SetTargetFPS(60);
-        
-        LdtkJson ldtkJson = LdtkJson.FromJson(File.ReadAllText(Directory.GetCurrentDirectory() + "/resource/ldtkexample.json"));
-        
-        List<Color> Colors = [
-            Color.Red, Color.Blue, Color.DarkGreen, Color.Yellow, Color.Pink, Color.Orange, Color.RayWhite, Color.LightGray, Color.Gray, Color.DarkGray,
-            Color.Black, Color.Brown, Color.DarkBlue, Color.Green, Color.SkyBlue, Color.Maroon, Color.Gold, Color.DarkPurple, Color.DarkBrown];
 
-        Texture2D tileBgTex = Raylib.LoadTexture(Directory.GetCurrentDirectory() + "/resource/Inca_back2_by_Kronbits.png");
-        Texture2D tileTex = Raylib.LoadTexture(Directory.GetCurrentDirectory() + "/resource/Inca_front_by_Kronbits-extended.png");
+        Tilemap tilemap = new Tilemap("ldtkexample.json");
         
         while (!Raylib.WindowShouldClose())
         {
             Raylib.BeginDrawing();
             Raylib.BeginMode2D(new Camera2D(Vector2.Zero, Vector2.Zero, 0, 1));
-            
-            foreach (TileInstance? tile in ldtkJson.Levels[0].LayerInstances[1].AutoLayerTiles)
-            {
-                int tID = (int)tile.T;
-                int columns = tileBgTex.Width / 16;
-                Raylib.DrawTextureRec(tileBgTex, new Rectangle((tID % columns) * 16, (tID / columns) * 16, 16, 16), new Vector2((int)tile.Px[0], (int)tile.Px[1]), Color.White);
-                // Raylib.DrawRectangle((int)tile.Px[0], (int)tile.Px[1], 16, 16, Colors[(int)tile.T % Colors.Count]);
-            }
-            
-            foreach (TileInstance? tile in ldtkJson.Levels[0].LayerInstances[0].AutoLayerTiles)
-            {
-                int tID = (int)tile.T;
-                int columns = tileTex.Width / 16;
-                Raylib.DrawTextureRec(tileTex, new Rectangle((tID % columns) * 16, (tID / columns) * 16, 16, 16), new Vector2((int)tile.Px[0], (int)tile.Px[1]), Color.White);
-                // Raylib.DrawRectangle((int)tile.Px[0], (int)tile.Px[1], 16, 16, Colors[(int)tile.T % Colors.Count]);
-            }
-            
+            tilemap.Draw();
             player.Update();
             game.Update();
             Raylib.ClearBackground(Color.Black);
