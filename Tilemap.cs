@@ -1,6 +1,7 @@
 using System.Numerics;
 using ldtk;
 using Raylib_cs;
+using Raylib_Game_CS_;
 
 public class Tilemap
 {
@@ -10,16 +11,11 @@ public class Tilemap
     public Tilemap(string jsonPath)
     {
         LdtkJson = LdtkJson.FromJson(File.ReadAllText(Directory.GetCurrentDirectory() + "/resource/" + jsonPath));
-
-        // TileTextures = new Texture2D[LdtkJson.Levels[0].LayerInstances.Length];
-        // for (int i = 0; i < LdtkJson.Levels[0].LayerInstances.Length; i++)
-        // {
-        //     string name = Path.GetFileName(LdtkJson.Levels[0].LayerInstances[i].TilesetRelPath);
-        //     TileTextures[i] = Raylib.LoadTexture(Directory.GetCurrentDirectory() + "/resource/" + name);
-        // }
         
-        // This is the same as commented above, but funnier for it's abuse of C# conveniences
-        TileTextures = LdtkJson.Levels[0].LayerInstances.Select(e => { return Raylib.LoadTexture(Directory.GetCurrentDirectory() + "/resource/" + Path.GetFileName(e.TilesetRelPath)); }).ToArray();
+        TileTextures = LdtkJson.Levels[0].LayerInstances.Select(e =>
+        {
+            return Raylib.LoadTexture($"{Directory.GetCurrentDirectory()}/resource/{Path.GetFileName(e.TilesetRelPath)}");
+        }).ToArray();
     }
 
     public void Draw()
@@ -37,9 +33,12 @@ public class Tilemap
 
     ~Tilemap() // destructor, prevents gpu memory leak if game loads levels more than once.
     {
-        foreach (Texture2D tex in TileTextures)
+        Game.LateActions.Enqueue(() =>
         {
-            Raylib.UnloadTexture(tex);
-        }
+            foreach (Texture2D tex in TileTextures)
+            {
+                Raylib.UnloadTexture(tex);
+            }
+        });
     }
 }
