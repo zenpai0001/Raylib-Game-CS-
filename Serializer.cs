@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Raylib_Game_CS_
 {
-        public interface ISerializable
+        public interface ISerializable <T>
         {
             string jsonFilePath { get; set; }
 
             string jsonContent { get; set;  }
-            public void Deserialize(ISerializable serializable)
+            public virtual void Deserialize(ISerializable<T> serializable)
             {
                 jsonContent = File.ReadAllText(jsonFilePath);
             }
-            public void Serialize()
+            public virtual void Serialize()
             {
 
             }
