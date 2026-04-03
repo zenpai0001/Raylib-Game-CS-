@@ -6,16 +6,13 @@ using System.Text;
 
 namespace Raylib_Game_CS_;
 
-public class Player : ICollidable
+public class Player : ICollidable<Player>
 {
     //ICollidable fields
-    public Vector2 Hitbox { get; set; }
+    public Vector2 Position { get; set; }
 
     public float Radius { get; set; }
-
-    public Rectangle hitbox1 { get; set; }
-
-  public Rectangle hitbox2 { get; set; }
+    public Rectangle Target { get; set; }
 
     //Player fields
     public float speed = 1.01f;
@@ -24,25 +21,26 @@ public class Player : ICollidable
 
     public float gravityStrength = 9.81f;
 
-    public Vector2 playerPosition = new Vector2 (Raylib.GetScreenWidth()/2.2f, Raylib.GetScreenHeight()/2.2f);
+    public Vector2 playerPosition = new Vector2(Raylib.GetScreenWidth() / 2.2f, Raylib.GetScreenHeight() / 2.2f);
 
     public Vector2 direction = Vector2.Zero;
 
-    public Player(){
+    public Player()
+    {
         //empty constructor for now, but I may need to add some initialization logic here later on.
         //It's to keep the compiler from complaining about the struct not having one.
     }
     public void Update()
     {
         //Updates the direction vector based on player input. I'll need to workout a few things.
-        if (Raylib.IsKeyDown(KeyboardKey.W)) playerPosition.Y -= gravityStrength/2.0f;
+        if (Raylib.IsKeyDown(KeyboardKey.W)) playerPosition.Y -= gravityStrength / 2.0f;
         if (Raylib.IsKeyDown(KeyboardKey.A)) playerPosition.X -= 1.0f;
         if (Raylib.IsKeyDown(KeyboardKey.D)) playerPosition.X += 1.0f;
 
         //Moves the player based on the direction vector and speed.
         playerPosition += direction * speed * Raylib.GetFrameTime();
 
-        if(gravityEnabled == true)
+        if (gravityEnabled == true)
         {
             playerPosition.Y += gravityStrength * Raylib.GetFrameTime();
         }
@@ -51,16 +49,39 @@ public class Player : ICollidable
         {
             playerPosition = Vector2.Zero;
         }
-
-        ICollidable collidable = this; //This is just to satisfy the compiler, I don't actually need to use this variable.
     }
-    public void CollisionCheck(ICollidable collidable)
+
+    public class CollisionHandler : Player
     {
-        Rectangle hitbox1 = new Rectangle(Hitbox.X, Hitbox.Y, Radius * 2, Radius * 2);
 
-        Rectangle hitbox2 = new Rectangle(collidable.Hitbox.X, collidable.Hitbox.Y, collidable.Radius * 2, collidable.Radius * 2);
+        public CollisionHandler()
+        {
+        CollisionHandler collisionHandler = new CollisionHandler();
+        }
 
-        Raylib.CheckCollisionRecs(hitbox1, hitbox2);
+        public void CollisionDetection(ICollidable<Player> collidable)
+        {     //This is where the collision detection logic will go.
+
+            if (Raylib.CheckCollisionCircles(Position, Radius, collidable.Position, collidable.Radius))
+            {
+                // Handle circle-circle collision
+                Raylib.DrawText("Circle-Circle Collision Detected!", 10, 10, 20, Color.Red);
+
+                playerPosition -= direction * speed * Raylib.GetFrameTime(); // Simple response to collision, moves player back to previous position
+
+            }
+            else if (Raylib.CheckCollisionRecs(Target, collidable.Target))
+            {
+                // Handle rectangle-rectangle collision
+                Raylib.DrawText("Rectangle Collision Detected!", 10, 10, 20, Color.Red);
+            }
+            else if (Raylib.CheckCollisionCircleRec(Position, Radius, collidable.Target))
+            {
+                // Handle circle-rectangle collision
+                Raylib.DrawText("Circle-Rectangle Collision Detected!", 10, 10, 20, Color.Red);
+            }
+
+        }
+
     }
-
 }
