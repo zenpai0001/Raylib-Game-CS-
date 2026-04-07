@@ -95,3 +95,11 @@ OnDamageTaken //Event triggered when an object takes damage, with parameters for
 OnHealthChanged //Event triggered when an object's health changes, with parameters for the new health value and the source of the change.
 OnDeath //Event triggered when an object's health reaches zero, with parameters for the source of the death and any relevant information (e.g. score, loot drops, etc.)
 OnLevelComplete //Event triggered when a level is completed, with parameters for the level number and any relevant information (e.g. score, time taken, etc.)
+
+
+Update 4/7/26:
+
+A menu has to be designed. GUIs are event driven.
+From the button clicking to the menu itself.
+Events can be subscribed and unsubscribed to allow for resources to be cleaned up or called in when needed.
+Sometimes, certain conditions may require an event to be triggered, such as when the player takes damage or completes a level.
