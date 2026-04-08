@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace Raylib_Game_CS_;
-
 public class Player : ICollidable<Player>
 {
     //ICollidable fields
