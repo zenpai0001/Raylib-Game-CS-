@@ -8,9 +8,8 @@ public static class Utils
 {
     public static Color ToRaylib(this B2HexColor color)
     {
-        // var c = color;
-        return Color.Red;
-        // return new Color(c.R, c.G, c.B, c.A);
+        int i = (int)color;        
+        return new Color((i >> 16) & 0xFF, (i >> 8) & 0xFF, i & 0xFF, 255);
     }
 
     public static B2Vec2 ToB2(this Vector2 vec)
