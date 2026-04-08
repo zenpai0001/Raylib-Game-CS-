@@ -12,9 +12,6 @@ using static Box2D.NET.B2Worlds;
 using static Box2D.NET.B2Geometries;
 using static Box2D.NET.B2Diagnostics;
 using Raylib_cs;
-using Raylib_Game_CS_;
-
-namespace Raylib_Game_C_;
 
 public class PhysicsTest
 {
@@ -28,7 +25,7 @@ public class PhysicsTest
     
     public PhysicsTest(Tilemap tilemap)
     {
-        _ballTex = Raylib.LoadTexture(Directory.GetCurrentDirectory() + "/resource/woman.png");
+        _ballTex = Raylib.LoadTexture(Game.dir + "woman.png");
         
         B2WorldDef worldDef = b2DefaultWorldDef();
         
@@ -76,8 +73,7 @@ public class PhysicsTest
         foreach (B2BodyId ball in _balls)
         {
             B2Vec2 pos = b2Body_GetWorldCenterOfMass(ball);
-            // float rot = b2Body_GetRotation(ball).GetAngle() * 180 / MathF.PI;
-            float rot = 0;
+            float rot = b2Rot_GetAngle(b2Body_GetRotation(ball)) * 180 / MathF.PI;
             Raylib.DrawTexturePro(_ballTex, new Rectangle(0, 0, _ballTex.Dimensions), new Rectangle(pos.ToVec2(), _ballTex.Dimensions/2), _ballTex.Dimensions/4, rot, Color.LightGray);
         }
         

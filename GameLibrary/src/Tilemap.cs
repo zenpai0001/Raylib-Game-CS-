@@ -1,7 +1,6 @@
 using System.Numerics;
 using Ldtk;
 using Raylib_cs;
-using Raylib_Game_CS_;
 
 public class Tilemap
 {
@@ -10,11 +9,11 @@ public class Tilemap
     
     public Tilemap(string jsonPath)
     {
-        LdtkJson = LdtkJson.FromJson(File.ReadAllText(Directory.GetCurrentDirectory() + "/resource/" + jsonPath));
+        LdtkJson = LdtkJson.FromJson(File.ReadAllText(Game.dir + jsonPath));
         
         TileTextures = LdtkJson.Levels[0].LayerInstances.Select(e =>
         {
-            return Raylib.LoadTexture($"{Directory.GetCurrentDirectory()}/resource/{Path.GetFileName(e.TilesetRelPath)}");
+            return Raylib.LoadTexture(Game.dir + Path.GetFileName(e.TilesetRelPath));
         }).ToArray();
     }
 
