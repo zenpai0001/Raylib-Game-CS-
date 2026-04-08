@@ -16,9 +16,9 @@ public class Game
     {
         //This is where the game updates every frame. Game loop calls this function.
         Raylib.DrawText("FPS: " +Raylib.GetFPS().ToString(), 10, 40, 20, Color.White);
-        Raylib.DrawRectangle((int)player.hitbox2.X,(int)player.hitbox2.Y,100,20,Color.Blue);
-        
-        player.CollisionCheck(player);
+        // Raylib.DrawRectangle((int)player.hitbox2.X,(int)player.hitbox2.Y,100,20,Color.Blue);
+        //
+        // player.CollisionCheck(player);
     }
     
     public void GameStart()

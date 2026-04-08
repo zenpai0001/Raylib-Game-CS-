@@ -1,5 +1,5 @@
 using System.Numerics;
-using ldtk;
+using Ldtk;
 using Raylib_cs;
 using Raylib_Game_CS_;
 
@@ -22,7 +22,7 @@ public class Tilemap
     {
         for (int i = LdtkJson.Levels[0].LayerInstances.Length-1; i >= 0; i--) // sneaky reverse for loop!
         {
-            foreach (TileInstance? tile in LdtkJson.Levels[0].LayerInstances[i].AutoLayerTiles)
+            foreach (var tile in LdtkJson.Levels[0].LayerInstances[i].AutoLayerTiles)
             {
                 int tID = (int)tile.T;
                 int columns = TileTextures[i].Width / 16;
