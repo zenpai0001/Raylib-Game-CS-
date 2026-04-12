@@ -46,6 +46,15 @@ public class PhysicsTest
         }
     }
     
+    public void ClearBalls()
+    {
+        foreach (B2BodyId ball in _balls)
+        {
+            b2DestroyBody(ball);
+        }
+        _balls.Clear();
+    }
+    
     public void Step()
     {
         if (Raylib.IsMouseButtonPressed(0) || Raylib.IsKeyDown(KeyboardKey.Space))

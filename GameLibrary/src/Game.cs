@@ -16,6 +16,7 @@ public static class Game
     {
         Raylib.InitWindow(800, 600, "Hello World");
         Raylib.SetTargetFPS(60);
+        Raylib.InitAudioDevice();
         
         Tilemap = new Tilemap("ldtkexample.json");
         PhysicsTest = new PhysicsTest(Tilemap);
@@ -37,7 +38,7 @@ public static class Game
         Raylib.SetMouseCursor(MouseCursor.Crosshair);
 
         //Ending Gui logic here.
-            
+        
         Tilemap.Draw();
         Player.Update();
         PhysicsTest.Step();
@@ -45,6 +46,12 @@ public static class Game
         Raylib.DrawCircleV(Player.playerPosition, 20, Color.Green);
 
         Raylib.EndMode2D();
+        
+        if (ImGui.Button(0, 0, "Clear"))
+        {
+            PhysicsTest.ClearBalls();
+        }
+        
         Raylib.DrawText("FPS: " + Raylib.GetFPS().ToString(), 10, 40, 12, Color.White);
         Raylib.EndDrawing();
     }
