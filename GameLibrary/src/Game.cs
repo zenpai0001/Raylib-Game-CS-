@@ -5,7 +5,8 @@ namespace GameLibrary;
 
 public static class Game
 {
-    public static string dir = "";
+    public static bool IsWeb;
+    public static string Dir = "";
     public static Menu Menu = new Menu();
     public static Player Player = new Player();
     public static Queue<Action> LateActions = new Queue<Action>(); // LateActions are dequeued and invoked after everything else has updated.

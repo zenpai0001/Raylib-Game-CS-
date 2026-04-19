@@ -11,21 +11,27 @@ public static class Resources
 
     public static void Load()
     {
-        foreach (string spritePath in Directory.GetFiles(Game.dir + "sprite/", "*.png", SearchOption.AllDirectories))
+        Console.WriteLine("Detecting game files:");
+        foreach (string path in Directory.GetFiles(Game.IsWeb ? "/" : Game.Dir, "*", SearchOption.AllDirectories))
+        {
+            Console.WriteLine("    " + path);
+        }
+        foreach (string spritePath in Directory.GetFiles(Game.Dir + "sprite/", "*.png", SearchOption.AllDirectories))
         {
             Sprites.Add(Path.GetFileNameWithoutExtension(spritePath), Raylib.LoadTexture(spritePath));
         }
-        foreach (string soundPath in Directory.GetFiles(Game.dir + "sound/", "*", SearchOption.AllDirectories))
+        foreach (string soundPath in Directory.GetFiles(Game.Dir + "sound/", "*", SearchOption.AllDirectories))
         {
             Sounds.Add(Path.GetFileNameWithoutExtension(soundPath), Raylib.LoadSound(soundPath));
         }
-        foreach (string musicPath in Directory.GetFiles(Game.dir + "music/", "*", SearchOption.AllDirectories))
+        foreach (string musicPath in Directory.GetFiles(Game.Dir + "music/", "*", SearchOption.AllDirectories))
         {
             Musics.Add(Path.GetFileNameWithoutExtension(musicPath), Raylib.LoadMusicStream(musicPath));
         }
-        foreach (string tilemapPath in Directory.GetFiles(Game.dir + "tilemap/", "*.json", SearchOption.AllDirectories))
+        foreach (string tilemapPath in Directory.GetFiles(Game.Dir + "tilemap/", "*.json", SearchOption.AllDirectories))
         {
             Tilemaps.Add(Path.GetFileNameWithoutExtension(tilemapPath), new Tilemap(tilemapPath));
         }
+        Console.WriteLine("All game files loaded OK!");
     }
 }
