@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
+namespace GameLibrary;
 
 //Checks for collision between two collidable objects. Shared logic for all collision types.
 public interface ICollidable<T>

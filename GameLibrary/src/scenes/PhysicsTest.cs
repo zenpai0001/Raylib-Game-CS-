@@ -1,5 +1,4 @@
 using System.Numerics;
-using System.Runtime.InteropServices;
 using Box2D.NET;
 using Ldtk;
 using static Box2D.NET.B2Joints;
@@ -13,19 +12,23 @@ using static Box2D.NET.B2Geometries;
 using static Box2D.NET.B2Diagnostics;
 using Raylib_cs;
 
-public class PhysicsTest
+namespace GameLibrary;
+
+public class PhysicsTest : Scene
 {
     private B2WorldId WorldId;
     private static B2DebugDraw _debugDraw = Box2dDebugDrawRaylib.Create();
     private Texture2D _ballTex;
     float timeStep = 1.0f / 60.0f;
     int subStepCount = 4;
+    private Tilemap _tilemap;
     
     private List<B2BodyId> _balls = new List<B2BodyId>();
     
     public PhysicsTest(Tilemap tilemap)
     {
-        _ballTex = Raylib.LoadTexture(Game.dir + "woman.png");
+        _tilemap = tilemap;
+        _ballTex = Resources.Sprites["woman"];
         
         B2WorldDef worldDef = b2DefaultWorldDef();
         
@@ -55,8 +58,13 @@ public class PhysicsTest
         _balls.Clear();
     }
     
-    public void Step()
+    public override void Update()
     {
+        Raylib.ClearBackground(Color.Black);
+
+        Raylib.BeginMode2D(Game.Camera2D);
+        _tilemap.Draw();
+        
         if (Raylib.IsMouseButtonPressed(0) || Raylib.IsKeyDown(KeyboardKey.Space))
         {
             B2BodyDef bodyDef = b2DefaultBodyDef();
@@ -88,6 +96,16 @@ public class PhysicsTest
         
         if (Raylib.IsKeyDown(KeyboardKey.V))
             b2World_Draw(WorldId, _debugDraw);
+        
+        Raylib.EndMode2D();
+
+        if (ImGui.Button("Clear", 0, 0))
+        {
+            ClearBalls();
+        }
+
+        if (Raylib.IsKeyDown(KeyboardKey.Escape)) Game.ActiveScene = new MainMenu();
+
     }
     
     public void Destroy()

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices.JavaScript;
 using Raylib_cs;
+using GameLibrary;
 
 namespace RaylibWasm
 {

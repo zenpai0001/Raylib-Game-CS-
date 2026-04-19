@@ -3,12 +3,14 @@ using Box2D;
 using Box2D.NET;
 using Raylib_cs;
 
+namespace GameLibrary;
+
 // Designated dumping ground for extension methods and math functions
 public static class Utils
 {
     public static Color ToRaylib(this B2HexColor color)
     {
-        int i = (int)color;        
+        int i = (int)color;
         return new Color((i >> 16) & 0xFF, (i >> 8) & 0xFF, i & 0xFF, 255);
     }
 

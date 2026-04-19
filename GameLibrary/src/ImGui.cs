@@ -1,5 +1,7 @@
 using Raylib_cs;
 
+namespace GameLibrary;
+
 // Immediate mode GUI functions, similar to raygui.
 public static class ImGui
 {
@@ -8,11 +10,11 @@ public static class ImGui
 
     static ImGui()
     {
-        _buttonPress = Raylib.LoadSound(Game.dir + "button_press.wav");
-        _buttonRelease = Raylib.LoadSound(Game.dir + "button_release.wav");
+        _buttonPress = Resources.Sounds["button_press"];
+        _buttonRelease = Resources.Sounds["button_release"];
     }
     
-    public static bool Button(int x, int y, string label)
+    public static bool Button(string label, int x, int y)
     {
         Rectangle rect = new Rectangle(x, y, 100, 30);
         bool hovered = Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), rect);
@@ -22,7 +24,7 @@ public static class ImGui
         if (hovered && Raylib.IsMouseButtonPressed(MouseButton.Left)) Raylib.PlaySound(_buttonPress);
         
         Raylib.DrawRectangleRec(rect, color);
-        Raylib.DrawText(label, x + 10, y + 10, 12, Color.White);
+        Raylib.DrawText(label, x + 10, y + 10, 20, Color.White);
 
         if (hovered && Raylib.IsMouseButtonReleased(MouseButton.Left))
         {

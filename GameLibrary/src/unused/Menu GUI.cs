@@ -1,4 +1,4 @@
-﻿
+﻿namespace GameLibrary;
 
 public class Menu
 {

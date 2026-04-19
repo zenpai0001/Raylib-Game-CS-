@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+namespace GameLibrary;
+
 public interface IDamagable<T>
 {
     public int Health { get; set; }
