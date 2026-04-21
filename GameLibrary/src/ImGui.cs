@@ -17,7 +17,7 @@ public static class ImGui
     public static bool Button(string label, int x, int y)
     {
         Rectangle rect = new Rectangle(x, y, 100, 30);
-        bool hovered = Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), rect);
+        bool hovered = Raylib.CheckCollisionPointRec(Game.GetCursorPos(), rect);
         bool pressed = hovered && Raylib.IsMouseButtonDown(MouseButton.Left);
         Color color = hovered ? (pressed ? Color.DarkGray : Color.LightGray) : Color.Gray;
         

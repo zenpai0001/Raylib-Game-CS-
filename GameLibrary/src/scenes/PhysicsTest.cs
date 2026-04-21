@@ -62,7 +62,6 @@ public class PhysicsTest : Scene
     {
         Raylib.ClearBackground(Color.Black);
 
-        Raylib.BeginMode2D(Game.Camera2D);
         _tilemap.Draw();
         
         if (Raylib.IsMouseButtonPressed(0) || Raylib.IsKeyDown(KeyboardKey.Space))
@@ -73,7 +72,7 @@ public class PhysicsTest : Scene
             B2BodyId bodyId = b2CreateBody(WorldId, bodyDef);
         
             B2Circle dynamicCircle;
-            dynamicCircle.center = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Game.Camera2D).ToB2();
+            dynamicCircle.center = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), Game.GetActiveCamera()).ToB2();
             dynamicCircle.radius = 6;
         
             B2ShapeDef shapeDef = b2DefaultShapeDef();

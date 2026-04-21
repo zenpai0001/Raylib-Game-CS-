@@ -8,9 +8,9 @@ public static class Program
     {
         Game.Dir = Directory.GetCurrentDirectory() + "/resource/";
         
-        Game.Load();
+        Game.Load(3);
         
-        while (!Raylib.WindowShouldClose())
+        while (!Raylib.WindowShouldClose() && !Game.ShouldQuit)
         {
             Game.Update();
         }
