@@ -8,6 +8,7 @@ public static class Resources
     public static Dictionary<string, Sound> Sounds = new Dictionary<string, Sound>();
     public static Dictionary<string, Music> Musics = new Dictionary<string, Music>();
     public static Dictionary<string, Tilemap> Tilemaps = new Dictionary<string, Tilemap>();
+    public static Dictionary<string, Font> Fonts = new Dictionary<string, Font>();
 
     public static void Load()
     {
@@ -31,6 +32,12 @@ public static class Resources
         foreach (string tilemapPath in Directory.GetFiles(Game.Dir + "tilemap/", "*.json", SearchOption.AllDirectories))
         {
             Tilemaps.Add(Path.GetFileNameWithoutExtension(tilemapPath), new Tilemap(tilemapPath));
+        }
+        foreach (string fontPath in Directory.GetFiles(Game.Dir + "font/", "*.*", SearchOption.AllDirectories))
+        {
+            Font f = Raylib.LoadFont(fontPath);
+            Raylib.SetTextureFilter(f.Texture, TextureFilter.Point);
+            Fonts.Add(Path.GetFileNameWithoutExtension(fontPath), f);
         }
         Console.WriteLine("All game files loaded OK!");
     }

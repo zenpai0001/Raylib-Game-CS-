@@ -23,4 +23,13 @@ public static class Utils
     {
         return new Vector2(vec.X, vec.Y);
     }
+    
+    public static float MoveTowards(this float start, float target, float maxDistanceDelta)
+    {
+        if (Math.Abs(target - start) < maxDistanceDelta)
+        {
+            return target;
+        } 
+        return (start > target) ? (start - maxDistanceDelta) : (start + maxDistanceDelta);
+    }
 }
