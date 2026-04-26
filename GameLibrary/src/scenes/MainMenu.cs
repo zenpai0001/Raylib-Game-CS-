@@ -1,3 +1,4 @@
+using System.Numerics;
 using Raylib_cs;
 
 namespace GameLibrary;
@@ -5,9 +6,12 @@ namespace GameLibrary;
 public class MainMenu : Scene
 {
     private Music _menuMusic = Resources.Musics["menu_theme"];
+
+    private List<Font> _testFonts = new List<Font>();
     
     public MainMenu()
     {
+        Raylib.SetMusicVolume(_menuMusic, 0.5f);
         Raylib.PlayMusicStream(_menuMusic);
     }
     
@@ -17,23 +21,14 @@ public class MainMenu : Scene
         
         Raylib.ClearBackground(Color.Black);
         
-        Raylib.DrawTexture(Resources.Sprites["menubg"], 0, 0, Color.White);
+        Raylib.DrawTexture(Resources.Sprites["titlebg"], 0, 0, Color.White);
+        Raylib.DrawTexture(Resources.Sprites["titletext"], 88, 62 + (int)(Math.Sin(Time.Scaled) * 4), Color.White);
         
-        Raylib.DrawText("GAME TITLE", 10, 10, 50, Color.White);
-        if (ImGui.Button("Play", 100, 100))
-        {
-            Game.ActiveScene = new GameScene();
-        }
+        if ((Time.Scaled/2) % 1 < 0.5f) {ImGui.DrawText("Press '1' to start", 95, 220, 10);}
         
-        if (ImGui.Button("Play PhysicsTest", 100, 150))
+        if (Raylib.IsKeyPressed(KeyboardKey.One))
         {
-            Game.ActiveScene = new PhysicsTest(Resources.Tilemaps["ldtkexample"]);
+            Game.ActiveScene = new IntroCutscene();
         }
-
-        if (ImGui.Button("Quit", 100, 200))
-        {
-            Game.ShouldQuit = true;
-        }
-        
     }
 }

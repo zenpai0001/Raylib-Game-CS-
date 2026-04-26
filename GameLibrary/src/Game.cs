@@ -8,8 +8,6 @@ public static class Game
     public static bool IsWeb;
     public static bool ShouldQuit;
     public static string Dir = "";
-    public static Menu Menu = new Menu();
-    public static Player Player = new Player();
     public static Queue<Action> LateActions = new Queue<Action>(); // LateActions are dequeued and invoked after everything else has updated.
     public static Scene ActiveScene;
 
@@ -42,7 +40,7 @@ public static class Game
         while (LateActions.Count > 0) LateActions.Dequeue().Invoke();
         
         Raylib.EndMode2D();
-        Raylib.DrawText("FPS: " + Raylib.GetFPS(), 0, 0, 20, Color.White);
+        // ImGui.DrawText("FPS: " + Raylib.GetFPS(), 0, 0);
         _activeCamera = new Camera2D();
         Raylib.EndDrawing();
     }

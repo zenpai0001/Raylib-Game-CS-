@@ -1,3 +1,4 @@
+using System.Numerics;
 using Raylib_cs;
 
 namespace GameLibrary;
@@ -7,11 +8,23 @@ public static class ImGui
 {
     private static Sound _buttonPress;
     private static Sound _buttonRelease;
+    private static Font _defaultFont;
 
     static ImGui()
     {
         _buttonPress = Resources.Sounds["button_press"];
         _buttonRelease = Resources.Sounds["button_release"];
+        _defaultFont = Resources.Fonts["arcadepix"];
+    }
+
+    public static void DrawText(string text, Vector2 position, int size = 20)
+    {
+        Raylib.DrawTextEx(_defaultFont, text, position, size, 1, Color.White);
+    }
+
+    public static void DrawText(string text, int x, int y, int size = 20)
+    {
+        DrawText(text, new Vector2(x, y), size);
     }
     
     public static bool Button(string label, int x, int y)
@@ -24,7 +37,7 @@ public static class ImGui
         if (hovered && Raylib.IsMouseButtonPressed(MouseButton.Left)) Raylib.PlaySound(_buttonPress);
         
         Raylib.DrawRectangleRec(rect, color);
-        Raylib.DrawText(label, x + 10, y + 10, 20, Color.White);
+        DrawText(label, x + 5, y + 5);
 
         if (hovered && Raylib.IsMouseButtonReleased(MouseButton.Left))
         {
