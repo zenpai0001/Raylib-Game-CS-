@@ -83,11 +83,11 @@ public class Pingas
     public float EndTime;
     public Action? EndAction;
     
-    public Pingas(Music soundSource, float? startTime = null, float? endTime = null, Action? endAction = null)
+    public Pingas(Music soundSource, float? startTime = null, float? duration = null, Action? endAction = null)
     {
         SoundSource = soundSource;
         StartTime = startTime ?? 0.1f;
-        EndTime = endTime ?? Raylib.GetMusicTimeLength(SoundSource);
+        EndTime = startTime + duration ?? Raylib.GetMusicTimeLength(SoundSource);
         EndAction = endAction;
     }
 

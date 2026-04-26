@@ -31,6 +31,8 @@ public class GameScene : Scene
 
     private int _wordToAssign = 0;
 
+    private int _mashCounter = 0;
+
     private Pingas? _pingas;
 
     private Dictionary<KeyboardKey, int> _bindings = new Dictionary<KeyboardKey, int>();
@@ -264,10 +266,21 @@ public class GameScene : Scene
             Raylib.DrawRectangle(0, 0, 250, 12, new Color(0,0,0,200));
             ImGui.DrawText("Press 1, 2, 3, 4, 5, 6 to speak", 2, 2, 10);
         }
+
+        if (Time.Frame % 100 == 0)
+        {
+            if (_mashCounter > 15 && _pingas == null)
+            {
+                _pingas = Assets.Pingas[_levelId];
+                _pingas.Start();
+            }
+            _mashCounter = 0;
+        }
     }
 
     private void Speak(int wordIndex)
     {
+        _mashCounter++;
         _activeWord = _mimicPhrase.GetWord(wordIndex, WordSpawnPos());
         _currentSentence += _activeWord.Text + " ";
         _lastWordTime = Time.Scaled;

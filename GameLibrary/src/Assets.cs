@@ -223,4 +223,14 @@ public static class Assets
         ( "VICTOR" , 13.45f ),
         ( "Three" , 13.984f )
     }, new List<int>(){32, 27, 30, 29, 28, 11});
+
+    public static List<Pingas> Pingas = new List<Pingas>()
+    {
+        new Pingas(Resources.Musics["richard_snooping"], 0.490f, 0.433f),
+        new Pingas(Resources.Musics["brewster_snooping"], 0.539f, 0.244f),
+        new Pingas(Resources.Musics["ensignkat_snooping"], 1.308f, 0.245f),
+        new Pingas(Resources.Musics["payton_snooping"], 0.623f, 0.294f),
+        new Pingas(Resources.Musics["captain_snooping"], 0.354f, 0.271f),
+        new Pingas(Resources.Musics["computer_snooping"], 0.520f, 0.534f)
+    };
 }

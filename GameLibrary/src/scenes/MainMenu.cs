@@ -6,6 +6,7 @@ namespace GameLibrary;
 public class MainMenu : Scene
 {
     private Music _menuMusic = Resources.Musics["menu_theme"];
+    private Pingas _pingas;
 
     private List<Font> _testFonts = new List<Font>();
     
@@ -17,6 +18,8 @@ public class MainMenu : Scene
     
     public override void Update()
     {
+        if (_pingas?.Update() ?? false) _pingas = null;
+
         Raylib.UpdateMusicStream(_menuMusic);
         
         Raylib.ClearBackground(Color.Black);
@@ -29,6 +32,12 @@ public class MainMenu : Scene
         if (Raylib.IsKeyPressed(KeyboardKey.One))
         {
             Game.ActiveScene = new IntroCutscene();
+        }
+
+        if (Raylib.IsKeyPressed(KeyboardKey.P))
+        {
+            _pingas = Assets.Pingas[Random.Shared.Next(Assets.Pingas.Count)];
+            _pingas.Start();
         }
     }
 }
