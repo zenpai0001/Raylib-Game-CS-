@@ -18,7 +18,7 @@ public static class Game
     public static void Load(int scaleFactor)
     {
         _defaultCamera.Zoom = scaleFactor;
-        Raylib.InitWindow(320 * scaleFactor, 240 * scaleFactor, "Hello World");
+        Raylib.InitWindow(320 * scaleFactor, 240 * scaleFactor, "Disaster Aboard EFF Mill Bay");
         Raylib.SetTargetFPS(Time.FrameRate);
         Raylib.InitAudioDevice();
         Raylib.SetExitKey(KeyboardKey.Null);
